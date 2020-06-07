@@ -15,3 +15,13 @@ data ViewContext = ViewContext
     , controllerContext :: ControllerSupport.ControllerContext
     , layout :: Layout
     }
+
+data PostsController
+    = PostsAction
+    | NewPostAction
+    | ShowPostAction { postId :: !(Id Post) }
+    | CreatePostAction
+    | EditPostAction { postId :: !(Id Post) }
+    | UpdatePostAction { postId :: !(Id Post) }
+    | DeletePostAction { postId :: !(Id Post) }
+    deriving (Eq, Show, Data)
