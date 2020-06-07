@@ -25,3 +25,13 @@ data PostsController
     | UpdatePostAction { postId :: !(Id Post) }
     | DeletePostAction { postId :: !(Id Post) }
     deriving (Eq, Show, Data)
+
+data CommentsController
+    = CommentsAction
+    | NewCommentAction { postId :: !(Id Post) }
+    | ShowCommentAction { commentId :: !(Id Comment) }
+    | CreateCommentAction
+    | EditCommentAction { commentId :: !(Id Comment) }
+    | UpdateCommentAction { commentId :: !(Id Comment) }
+    | DeleteCommentAction { commentId :: !(Id Comment) }
+    deriving (Eq, Show, Data)

@@ -18,6 +18,6 @@ instance View NewView ViewContext where
 renderForm :: NewPost -> Html
 renderForm post = formFor post [hsx|
     {textField #title}
-    {textField #body}
+    {(textareaField #body) { helpText = "You can use Markdown here"} }
     {submitButton}
 |]

@@ -18,6 +18,6 @@ instance View EditView ViewContext where
 renderForm :: Post -> Html
 renderForm post = formFor post [hsx|
     {textField #title}
-    {textField #body}
+    {(textareaField #body) { helpText = "You can use Markdown here"} }
     {submitButton}
 |]
