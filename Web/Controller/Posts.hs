@@ -40,7 +40,7 @@ instance Controller PostsController where
                     redirectTo EditPostAction { .. }
 
     action CreatePostAction = do
-        let post = newRecord @NewPost
+        let post = newRecord @Post
         post
             |> buildPost
             |> ifValid \case

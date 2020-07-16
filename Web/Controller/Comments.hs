@@ -37,7 +37,7 @@ instance Controller CommentsController where
                     redirectTo EditCommentAction { .. }
 
     action CreateCommentAction = do
-        let comment = newRecord @NewComment
+        let comment = newRecord @Comment
         comment
             |> buildComment
             |> ifValid \case

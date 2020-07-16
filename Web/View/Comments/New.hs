@@ -2,7 +2,7 @@ module Web.View.Comments.New where
 import Web.View.Prelude
 
 data NewView = NewView
-    { comment :: NewComment
+    { comment :: Comment
     , post :: Post
     }
 
@@ -18,7 +18,7 @@ instance View NewView ViewContext where
         {renderForm comment}
     |]
 
-renderForm :: NewComment -> Html
+renderForm :: Comment -> Html
 renderForm comment = formFor comment [hsx|
     {hiddenField #postId}
     {textField #author}
