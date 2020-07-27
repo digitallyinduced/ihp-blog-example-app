@@ -228,3 +228,4 @@ language_extensions:
   - NamedFieldPuns
   - TemplateHaskell
   - QuasiQuotes
+  - TypeApplications
