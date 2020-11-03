@@ -6,8 +6,12 @@ import Web.View.Posts.New
 import Web.View.Posts.Edit
 import Web.View.Posts.Show
 import qualified Text.MMark as MMark
+import IHP.LoginSupport.Helper.Controller
+import IHP.AuthSupport.Authorization
 
 instance Controller PostsController where
+    beforeAction = ensureIsUser
+    
     action PostsAction = do
         posts <- query @Post
             |> orderByDesc #createdAt
@@ -26,6 +30,7 @@ instance Controller PostsController where
 
     action EditPostAction { postId } = do
         post <- fetch postId
+        accessDeniedUnless (get #userId post == currentUserId)
         render EditView { .. }
 
     action UpdatePostAction { postId } = do
@@ -43,6 +48,7 @@ instance Controller PostsController where
         let post = newRecord @Post
         post
             |> buildPost
+            |> set #userId (currentUserId)
             |> ifValid \case
                 Left post -> render NewView { .. } 
                 Right post -> do
@@ -52,6 +58,7 @@ instance Controller PostsController where
 
     action DeletePostAction { postId } = do
         post <- fetch postId
+        accessDeniedUnless (get #userId post == currentUserId)
         deleteRecord post
         setSuccessMessage "Post deleted"
         redirectTo PostsAction

@@ -24,12 +24,37 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
     <title>App</title>
 </head>
 <body>
+    {navbar}
     <div class="container mt-4">
         {renderFlashMessages}
         {inner}
     </div>
 </body>
 |]
+
+navbar :: Html
+navbar = [hsx|
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">IHP Blog</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href={PostsAction}>Posts</a>
+      </li>
+    </ul>
+    {loginLogoutButton}
+  </div>
+</nav>
+|]
+    where
+        loginLogoutButton :: Html
+        loginLogoutButton = case (get #user viewContext) of
+            Just user -> [hsx|<a class="js-delete js-delete-no-confirm text-secondary" href={DeleteSessionAction}>Logout</a>|]
+            Nothing -> [hsx|<a class="text-secondary" href={NewSessionAction}>Login</a>|]
 
 scripts = do
     when (isDevelopment FrameworkConfig.environment) [hsx|<script id="livereload-script" src="/livereload.js"></script>|]

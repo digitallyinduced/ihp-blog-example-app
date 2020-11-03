@@ -10,6 +10,7 @@ import Generated.Types
 import qualified IHP.ViewSupport as ViewSupport
 import Web.View.Layout
 import Web.Types
+import IHP.LoginSupport.Helper.Controller
 
 instance ViewSupport.CreateViewContext ViewContext where
     type ViewApp ViewContext = WebApplication
@@ -17,7 +18,7 @@ instance ViewSupport.CreateViewContext ViewContext where
         flashMessages <- IHP.Controller.Session.getAndClearFlashMessages
         let viewContext = ViewContext {
                 requestContext = ?requestContext,
-                -- user = currentUserOrNothing,
+                user = currentUserOrNothing,
                 flashMessages,
                 controllerContext = ?controllerContext,
                 layout = let ?viewContext = viewContext in defaultLayout

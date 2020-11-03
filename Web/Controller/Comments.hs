@@ -5,6 +5,8 @@ import Web.View.Comments.Index
 import Web.View.Comments.New
 import Web.View.Comments.Edit
 import Web.View.Comments.Show
+import IHP.AuthSupport.Authorization
+import IHP.LoginSupport.Helper.Controller
 
 instance Controller CommentsController where
     action CommentsAction = do
@@ -23,6 +25,7 @@ instance Controller CommentsController where
 
     action EditCommentAction { commentId } = do
         comment <- fetch commentId
+        accessDeniedUnless (get #userId comment == currentUserId)
         render EditView { .. }
 
     action UpdateCommentAction { commentId } = do
@@ -40,6 +43,7 @@ instance Controller CommentsController where
         let comment = newRecord @Comment
         comment
             |> buildComment
+            |> set #userId (currentUserId)
             |> ifValid \case
                 Left comment -> do
                     post <- fetch (get #postId comment)
@@ -51,6 +55,7 @@ instance Controller CommentsController where
 
     action DeleteCommentAction { commentId } = do
         comment <- fetch commentId
+        accessDeniedUnless (get #userId comment == currentUserId)
         deleteRecord comment
         setSuccessMessage "Comment deleted"
         redirectTo CommentsAction

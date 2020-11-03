@@ -5,5 +5,7 @@ module Application.Helper.Controller (
 
 -- Here you can add functions which are available in all your controllers
 
--- To use the built in login:
--- import IHP.LoginSupport.Helper.Controller
+import IHP.LoginSupport.Helper.Controller
+import Generated.Types
+
+type instance CurrentUserRecord = User
