@@ -5,8 +5,5 @@ import Web.Types
 
 -- Generator Marker
 instance AutoRoute PostsController
-type instance ModelControllerMap WebApplication Post = PostsController
-
 instance AutoRoute CommentsController
-type instance ModelControllerMap WebApplication Comment = CommentsController
 

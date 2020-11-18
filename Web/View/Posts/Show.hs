@@ -4,7 +4,7 @@ import qualified Text.MMark as MMark
 
 data ShowView = ShowView { post :: Include "comments" Post }
 
-instance View ShowView ViewContext where
+instance View ShowView where
     html ShowView { .. } = [hsx|
         <nav>
             <ol class="breadcrumb">

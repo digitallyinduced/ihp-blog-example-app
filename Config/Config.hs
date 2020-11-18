@@ -4,6 +4,7 @@ import IHP.Prelude
 import IHP.Environment
 import IHP.FrameworkConfig
 
-instance FrameworkConfig where 
-    environment = Development
-    appHostname = "localhost"
+config :: ConfigBuilder
+config = do
+    option Development
+    option (AppHostname "localhost")

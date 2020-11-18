@@ -3,7 +3,7 @@ import Web.View.Prelude
 
 data ShowView = ShowView { comment :: Comment }
 
-instance View ShowView ViewContext where
+instance View ShowView where
     html ShowView { .. } = [hsx|
         <nav>
             <ol class="breadcrumb">

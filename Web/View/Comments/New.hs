@@ -6,7 +6,7 @@ data NewView = NewView
     , post :: Post
     }
 
-instance View NewView ViewContext where
+instance View NewView where
     html NewView { .. } = [hsx|
         <nav>
             <ol class="breadcrumb">

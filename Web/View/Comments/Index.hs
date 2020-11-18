@@ -3,7 +3,7 @@ import Web.View.Prelude
 
 data IndexView = IndexView { comments :: [Comment] }
 
-instance View IndexView ViewContext where
+instance View IndexView where
     html IndexView { .. } = [hsx|
         <nav>
             <ol class="breadcrumb">
