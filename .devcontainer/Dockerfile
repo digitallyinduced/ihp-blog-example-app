@@ -39,5 +39,5 @@ USER vscode
 RUN curl -L https://nixos.org/nix/install | sh
 RUN echo "if [ -e /home/vscode/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vscode/.nix-profile/etc/profile.d/nix.sh; fi" >> /home/vscode/.bashrc
 RUN /home/vscode/.nix-profile/bin/nix-env -iA nixpkgs.cachix nixpkgs.direnv nixpkgs.haskellPackages.cabal-install
-RUN echo "eval \"$(direnv hook bash)\"" >> /home/vscode/.bashrc
-RUN echo "eval \"$(direnv hook zsh)\"" >> /home/vscode/.zshrc
+RUN echo "eval \"\$(direnv hook bash)\"" >> /home/vscode/.bashrc
+RUN echo "eval \"\$(direnv hook zsh)\"" >> /home/vscode/.zshrc
