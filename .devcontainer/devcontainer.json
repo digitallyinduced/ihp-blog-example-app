@@ -6,6 +6,9 @@
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
   },
-  "extensions": ["haskell.haskell"]
+  "extensions": [
+	  "haskell.haskell",
+	  "rubymaniac.vscode-direnv"
+  ]
   // "remoteUser": "ihp"
 }
