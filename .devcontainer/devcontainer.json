@@ -6,6 +6,6 @@
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
   },
-  "extensions": ["haskell.haskell"],
-  "remoteUser": "ihp"
+  "extensions": ["haskell.haskell"]
+  // "remoteUser": "ihp"
 }
