@@ -44,5 +44,5 @@ RUN echo "eval \"\$(direnv hook zsh)\"" >> /home/vscode/.zshrc
 RUN sudo rm /bin/sh && sudo ln -s /bin/bash /bin/sh
 USER root
 RUN echo "if [ -e /home/vscode/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vscode/.nix-profile/etc/profile.d/nix.sh; fi" >> /etc/bash.bashrc
-RUN echo "eval \"\$(direnv hook bash)\" >> /etc/bash.bashrc
+RUN echo "eval \"\$(direnv hook bash)\"" >> /etc/bash.bashrc
 USER vscode
