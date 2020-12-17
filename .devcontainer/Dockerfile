@@ -42,5 +42,7 @@ RUN /home/vscode/.nix-profile/bin/nix-env -iA nixpkgs.cachix nixpkgs.direnv
 RUN echo "eval \"\$(direnv hook bash)\"" >> /home/vscode/.bashrc
 RUN echo "eval \"\$(direnv hook zsh)\"" >> /home/vscode/.zshrc
 RUN sudo rm /bin/sh && sudo ln -s /bin/bash /bin/sh
-RUN sudo $(echo "if [ -e /home/vscode/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vscode/.nix-profile/etc/profile.d/nix.sh; fi" >> /etc/bash.bashrc)
-RUN sudo $(echo "eval \"\$(direnv hook bash)\" >> /etc/bash.bashrc)
+USER root
+RUN echo "if [ -e /home/vscode/.nix-profile/etc/profile.d/nix.sh ]; then . /home/vscode/.nix-profile/etc/profile.d/nix.sh; fi" >> /etc/bash.bashrc
+RUN echo "eval \"\$(direnv hook bash)\" >> /etc/bash.bashrc
+USER vscode
