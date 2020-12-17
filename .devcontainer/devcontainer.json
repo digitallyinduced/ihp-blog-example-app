@@ -9,6 +9,6 @@
   "extensions": [
 	  "haskell.haskell",
 	  "rubymaniac.vscode-direnv"
-  ]
-  // "remoteUser": "ihp"
+  ],
+  "remoteUser": "vscode"
 }
