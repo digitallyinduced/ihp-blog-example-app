@@ -6,5 +6,5 @@ import IHP.FrameworkConfig
 
 config :: ConfigBuilder
 config = do
-    option Production
+    option Development
     option (AppHostname "localhost")
