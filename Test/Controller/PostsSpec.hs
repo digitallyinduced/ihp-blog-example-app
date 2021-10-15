@@ -18,6 +18,7 @@ import Web.Types
 import Web.Controller.Posts ()
 import Web.FrontController ()
 
+
 tests :: Spec
 tests = beforeAll (mockContext WebApplication config) do
     describe "User controller" $ do
@@ -29,7 +30,7 @@ tests = beforeAll (mockContext WebApplication config) do
             content <- mockActionResponse NewPostAction
             isInfixOf "You can use Markdown here" (cs content) `shouldBe` True
 
-        it "creates a new post" $ withParams [("a-test-param", "some-value")] do
+        it "creates a new post" $ withParams [("title", "Post title"), ("body", "Body of post")] do
             mockActionStatus CreatePostAction `shouldReturn` status200
 
         it "returns a redirect header" $ withContext do
