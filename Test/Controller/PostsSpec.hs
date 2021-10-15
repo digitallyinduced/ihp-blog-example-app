@@ -27,7 +27,7 @@ tests = beforeAll (mockContext WebApplication config) do
 
         it "responds with some content" $ withContext do
             content <- mockActionResponse NewPostAction
-            content `shouldBe` "<!DOCTYPE HTML>...</html>"
+            isInfixOf "You can use Markdown here" (cs content) `shouldBe` True
 
         it "creates a new post" $ withParams [("a-test-param", "some-value")] do
             mockActionStatus CreatePostAction `shouldReturn` status200
