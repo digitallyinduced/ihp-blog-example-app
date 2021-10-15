@@ -1,7 +1,7 @@
 let
     ihp = builtins.fetchGit {
         url = "https://github.com/digitallyinduced/ihp.git";
-        rev = "26293203b05c920a27b51bc18406dd6d8c352ead";
+        rev = "f12733f8b0f6e9725d93b67051f36c896bc55edf";
     };
     haskellEnv = import "${ihp}/NixSupport/default.nix" {
         ihp = ihp;
@@ -13,6 +13,7 @@ let
             hlint
             p.ihp
             mmark
+            hspec
         ];
         otherDeps = p: with p; [
             # Native dependencies, e.g. imagemagick
