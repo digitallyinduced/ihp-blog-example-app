@@ -1,6 +1,6 @@
 module Test.Controller.PostsSpec where
 
-import Network.HTTP.Types.Status (status200)
+import Network.HTTP.Types.Status
 
 import IHP.Prelude
 import IHP.QueryBuilder (query)
@@ -17,22 +17,43 @@ import Web.Routes
 import Web.Types
 import Web.Controller.Posts ()
 import Web.FrontController ()
-
+import Network.Wai
+import IHP.ControllerPrelude
 
 tests :: Spec
-tests = beforeAll (mockContext WebApplication config) do
-    describe "User controller" $ do
-        it "has no existing posts" $ withContext do
-            users <- query @Post |> fetch
-            users `shouldBe` []
+tests = aroundAll (withIHPApp WebApplication config) do
+        describe "PostsController" $ do
+            it "has no existing posts" $ withContext do
+                count <- query @Post
+                    |> fetchCount
+                count `shouldBe` 0
 
-        it "responds with some content" $ withContext do
-            content <- mockActionResponse NewPostAction
-            isInfixOf "You can use Markdown here" (cs content) `shouldBe` True
+            it "calling NewPostAction will render a new form" $ withContext do
+                mockActionStatus NewPostAction `shouldReturn` status200
 
-        it "creates a new post" $ withParams [("title", "Post title"), ("body", "Body of post")] do
-            mockActionStatus CreatePostAction `shouldReturn` status200
+            it "creates a new post" $ withParams [("title", "Post title"), ("body", "Body of post")] do
+                response <- callAction CreatePostAction
+                
+                let (Just location) = (lookup "Location" (responseHeaders response))
+                location `shouldBe` "http://localhost:8000/Posts"
 
-        it "returns a redirect header" $ withContext do
-            hs <- headers (mockAction NewPostAction)
-            lookup "Location" hs `shouldNotBe` Nothing
+                -- Only one post should exist
+                count <- query @Post |> fetchCount
+                count `shouldBe` 1
+
+                -- Fetch the new post
+                post <- query @Post |> fetchOne
+
+                (get #title post) `shouldBe` "Post title"
+                (get #body post) `shouldBe` "Body of post"
+
+            it "can show posts" $ withContext do
+                post <- newRecord @Post
+                    |> set #title "Lorem Ipsum"
+                    |> set #body "**Mark down**"
+                    |> createRecord
+
+                response <- callAction ShowPostAction { postId = get #id post }
+
+                response `responseStatusShouldBe` status200
+                response `responseBodyShouldContain` "Lorem Ipsum"
