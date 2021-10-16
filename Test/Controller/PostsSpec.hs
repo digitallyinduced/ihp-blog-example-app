@@ -33,19 +33,19 @@ tests = aroundAll (withIHPApp WebApplication config) do
 
             it "creates a new post" $ withParams [("title", "Post title"), ("body", "Body of post")] do
                 response <- callAction CreatePostAction
-                
+
                 let (Just location) = (lookup "Location" (responseHeaders response))
                 location `shouldBe` "http://localhost:8000/Posts"
 
-                -- Only one post should exist
+                -- Only one post should exist.
                 count <- query @Post |> fetchCount
                 count `shouldBe` 1
 
-                -- Fetch the new post
+                -- Fetch the new post.
                 post <- query @Post |> fetchOne
 
-                (get #title post) `shouldBe` "Post title"
-                (get #body post) `shouldBe` "Body of post"
+                get #title post `shouldBe` "Post title"
+                get #body post `shouldBe` "Body of post"
 
             it "can show posts" $ withContext do
                 post <- newRecord @Post
@@ -57,3 +57,8 @@ tests = aroundAll (withIHPApp WebApplication config) do
 
                 response `responseStatusShouldBe` status200
                 response `responseBodyShouldContain` "Lorem Ipsum"
+
+                -- For debugging purposes you could do the following, to
+                -- see the HTML printed out on the terminal.
+                body <- responseBody response
+                putStrLn (cs body)
