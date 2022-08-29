@@ -12,17 +12,17 @@ instance View ShowView where
                 <li class="breadcrumb-item active">Show Post</li>
             </ol>
         </nav>
-        <h1>{get #title post}</h1>
-        <p>{get #createdAt post |> timeAgo}</p>
-        <div>{get #body post |> renderMarkdown}.</div>
-        <a href={NewCommentAction (get #id post)}>Add Comment</a>
-        <div>{forEach (get #comments post) renderComment}</div>
+        <h1>{post.title}</h1>
+        <p>{post.createdAt |> timeAgo}</p>
+        <div>{post.body |> renderMarkdown}.</div>
+        <a href={NewCommentAction (post.id)}>Add Comment</a>
+        <div>{forEach (post.comments) renderComment}</div>
     |]
 
 renderComment comment = [hsx|
         <div class="mt-4">
-            <h5>{get #author comment}</h5>
-            <p>{get #body comment}</p>
+            <h5>{comment.author}</h5>
+            <p>{comment.body}</p>
         </div>
     |]
 

@@ -14,7 +14,7 @@ instance View NewView where
                 <li class="breadcrumb-item active">Edit Comment</li>
             </ol>
         </nav>
-        <h1>New Comment for <q>{get #title post}</q></h1>
+        <h1>New Comment for <q>{post.title}</q></h1>
         {renderForm comment}
     |]
 
