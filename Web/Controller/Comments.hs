@@ -42,7 +42,7 @@ instance Controller CommentsController where
             |> buildComment
             |> ifValid \case
                 Left comment -> do
-                    post <- fetch (comment.postId)
+                    post <- fetch comment.postId
                     render NewView { .. }
                 Right comment -> do
                     comment <- comment |> createRecord

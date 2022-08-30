@@ -15,8 +15,8 @@ instance View ShowView where
         <h1>{post.title}</h1>
         <p>{post.createdAt |> timeAgo}</p>
         <div>{post.body |> renderMarkdown}.</div>
-        <a href={NewCommentAction (post.id)}>Add Comment</a>
-        <div>{forEach (post.comments) renderComment}</div>
+        <a href={NewCommentAction post.id}>Add Comment</a>
+        <div>{forEach post.comments renderComment}</div>
     |]
 
 renderComment comment = [hsx|
