@@ -4,7 +4,7 @@ Example project showing the project structure of a simple blog app built with [I
 After following the steps to install [IHP](https://ihp.digitallyinduced.com/Guide/installation.html), you can run this app locally by running:
 
 ```bash
-./start
+devenv up
 ```
 
 This will automatically deal with installing all dependencies, setting up the development database and importing fixtures.
