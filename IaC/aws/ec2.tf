@@ -9,6 +9,7 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "public" {
+  availability_zone = var.az_1
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.1.0/24"
   map_public_ip_on_launch = true  # This enables auto-assign public IPs for instances launched in this subnet
@@ -101,7 +102,8 @@ resource "aws_security_group" "ec2_sg" {
   }
 }
 
-resource "aws_instance" "ihp-app" {
+resource "aws_instance" "ihp_app" {
+  availability_zone = var.az_1
   ami = "ami-075111b79058282b7" # nixos/23.11
   instance_type = "t3.medium"
   key_name = "${var.key_name}"
@@ -109,14 +111,14 @@ resource "aws_instance" "ihp-app" {
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
   associate_public_ip_address = true
 
-  tags = {
-    Name = "${var.prefix}-ihp-app"
-  }
-
   # Add an EBS volume with 30GB of storage
   ebs_block_device {
     device_name = "/dev/xvda"
     volume_size = 30          # Size in GB
     volume_type = "gp2"       # General Purpose SSD
+  }
+
+  tags = {
+    Name = "${var.prefix}-ihp_app"
   }
 }
