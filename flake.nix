@@ -51,7 +51,7 @@
             # Used to deploy the IHP application to AWS.
             #
             # Change the `CHANGE-ME` to your correct config.
-            flake.nixosConfigurations."qa" = nixpkgs.lib.nixosSystem {
+            flake.nixosConfigurations."ihp-app" = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 specialArgs = inputs;
                 modules = [
@@ -136,7 +136,7 @@
                         # @see https://nixos.wiki/wiki/Automatic_system_upgrades
                         system.autoUpgrade.enable = true;
                         # Keep as is. See https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-                        system.stateVersion = "23.05";
+                        system.stateVersion = lib.mkForce "23.11";
                     })
                 ];
             };
